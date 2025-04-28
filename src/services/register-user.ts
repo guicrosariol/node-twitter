@@ -8,25 +8,30 @@ interface User {
   password: string
 }
 
-export async function userRegister(data: User) {
+export async function registerUserService({
+  name,
+  username,
+  email,
+  password
+}: User) {
   const userAlreadyExist = await prisma.user.findFirst({
     where: {
       OR: [
-        { email: data.email },
-        { username: data.username }
+        { email: email },
+        { username: username }
       ]
     }
   })
 
   if (userAlreadyExist) throw new Error('User already exist.')
 
-  const password_hash = await hash(data.password, 6)
+  const password_hash = await hash(password, 6)
 
   const user = await prisma.user.create({
     data: {
-      name: data.name,
-      username: data.username,
-      email: data.email,
+      name: name,
+      username: username,
+      email: email,
       password_hash
     }
   })
