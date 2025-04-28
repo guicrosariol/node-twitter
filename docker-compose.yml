@@ -1,0 +1,9 @@
+services: 
+  twitterclone:
+    image: bitnami/postgresql
+    ports:
+     - 5432:5432
+    environment:
+    - POSTGRESQL_USERNAME=twitterclone
+    - POSTGRESQL_PASSWORD=twitterclone
+    - POSTGRESQL_DATABASE=twitterclone
